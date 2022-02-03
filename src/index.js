@@ -20,6 +20,7 @@ const genDiff = (filepath1, filepath2) => {
     if (!_.has(data2, key)) {
       return `- ${key}: ${data1[key]}`;
     }
+
     if (!_.has(data1, key)) {
       return `+ ${key}: ${data2[key]}`;
     }

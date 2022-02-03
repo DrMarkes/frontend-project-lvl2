@@ -6,3 +6,6 @@
 
 ### Eslint:
 [![Linter](https://github.com/DrMarkes/frontend-project-lvl2/actions/workflows/linter.yml/badge.svg)](https://github.com/DrMarkes/frontend-project-lvl2/actions/workflows/linter.yml)
+
+### Install and use:
+[![asciicast](https://asciinema.org/a/RgI9LqzafOLuQ5AjwKnvxcgwR.svg)](https://asciinema.org/a/RgI9LqzafOLuQ5AjwKnvxcgwR)
