@@ -2,15 +2,16 @@ import _ from 'lodash';
 import path from 'path';
 import * as fs from 'fs';
 
+const parseFile = (filepath) => {
+  const normalizePath = path.resolve(filepath);
+  const fileContent = fs.readFileSync(normalizePath, 'utf-8');
+
+  return JSON.parse(fileContent);
+};
+
 const genDiff = (filepath1, filepath2) => {
-  const normalizePath1 = path.resolve(filepath1);
-  const normalizePath2 = path.resolve(filepath2);
-
-  const fileContent1 = fs.readFileSync(normalizePath1, 'utf-8');
-  const fileContent2 = fs.readFileSync(normalizePath2, 'utf-8');
-
-  const data1 = JSON.parse(fileContent1);
-  const data2 = JSON.parse(fileContent2);
+  const data1 = parseFile(filepath1);
+  const data2 = parseFile(filepath2);
 
   const sortedKeys = _.sortBy([...Object.keys(data1), ...Object.keys(data2)]);
   const uniqKeys = _.sortedUniq(sortedKeys);
