@@ -32,3 +32,19 @@ test('gendiff json to stylish', () => {
   expect(genDiff(file1Path, file3Path)).toBe(check3);
   expect(genDiff(file3Path, file1Path)).toBe(check4);
 });
+
+test('gendiff yaml to stylish', () => {
+  const file1Path = getFixturePath('file1.yaml');
+  const file2Path = getFixturePath('file2.yml');
+  const file3Path = getFixturePath('file3.yaml');
+
+  const check1 = getCheckFile('check1.txt');
+  const check2 = getCheckFile('check2.txt');
+  const check3 = getCheckFile('check3.txt');
+  const check4 = getCheckFile('check4.txt');
+
+  expect(genDiff(file1Path, file2Path)).toBe(check1);
+  expect(genDiff(file2Path, file1Path)).toBe(check2);
+  expect(genDiff(file1Path, file3Path)).toBe(check3);
+  expect(genDiff(file3Path, file1Path)).toBe(check4);
+});

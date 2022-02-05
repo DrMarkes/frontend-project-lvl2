@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import path from 'path';
-import * as fs from 'fs';
+import fs from 'fs';
+import parse from './parsers.js';
 
 const readFile = (filePath) => {
   const normalizePath = path.resolve(filePath);
@@ -25,9 +26,14 @@ const getDiff = (data1, data2) => {
   return `{\n  ${result}\n}`;
 };
 
+const getFormat = (filePath) => path.extname(filePath);
+
 const genDiff = (filePath1, filePath2) => {
-  const data1 = JSON.parse(readFile(filePath1));
-  const data2 = JSON.parse(readFile(filePath2));
+  const content1 = readFile(filePath1);
+  const content2 = readFile(filePath2);
+
+  const data1 = parse(content1, getFormat(filePath2));
+  const data2 = parse(content2, getFormat(filePath2));
 
   const diff = getDiff(data1, data2);
 
