@@ -4,17 +4,17 @@ const parseJson = (content) => JSON.parse(content);
 
 const parseYaml = (content) => yaml.load(content);
 
-const getParser = (content, formatFile) => {
+const getParser = (extName) => {
   let parse;
-  if (formatFile === '.json') {
+  if (extName === '.json') {
     parse = parseJson;
   }
 
-  if (formatFile === '.yaml' || formatFile === '.yml') {
+  if (extName === '.yaml' || extName === '.yml') {
     parse = parseYaml;
   }
 
-  return parse(content);
+  return parse;
 };
 
-export default (content, formatFile) => getParser(content, formatFile);
+export default (fileContent, extName) => getParser(extName)(fileContent);

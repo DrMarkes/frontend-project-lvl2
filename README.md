@@ -12,3 +12,6 @@
 
 ### Use with Yaml:
 [![asciicast](https://asciinema.org/a/091nSX1YhxV7VdOyTRQVWiXQO.svg)](https://asciinema.org/a/091nSX1YhxV7VdOyTRQVWiXQO)
+
+### Use to generate diff from deep tree files:
+[![asciicast](https://asciinema.org/a/467548.svg)](https://asciinema.org/a/467548)
