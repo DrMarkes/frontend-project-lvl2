@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import * as fs from 'fs';
 import genDiff from '../src/index.js';
+import stylish from '../src/formatters/stylish.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -17,36 +18,62 @@ const getCheckFile = (checkPath) => {
   return check;
 };
 
-let check1;
-let check2;
-let check3;
-let check4;
+let stylishChecks = [];
+const checkNames = [
+  'stylish1.txt',
+  'stylish2.txt',
+  'stylish3.txt',
+  'stylish4.txt',
+];
+
+let plainChecks = [];
+const plainNames = ['plain1.txt', 'plain2.txt'];
+
+let jsonPaths = [];
+const jsonNames = ['file1.json', 'file2.json', 'file3.json'];
+
+let yamlPaths = [];
+const yamlNames = ['file1.yaml', 'file2.yml', 'file3.yaml'];
 
 beforeAll(() => {
-  check1 = getCheckFile('check1.txt');
-  check2 = getCheckFile('check2.txt');
-  check3 = getCheckFile('check3.txt');
-  check4 = getCheckFile('check4.txt');
+  stylishChecks = checkNames.map((name) => getCheckFile(name));
+  plainChecks = plainNames.map((name) => getCheckFile(name));
+  jsonPaths = jsonNames.map((name) => getFixturePath(name));
+  yamlPaths = yamlNames.map((name) => getFixturePath(name));
 });
 
 test('gendiff json to stylish', () => {
-  const file1Path = getFixturePath('file1.json');
-  const file2Path = getFixturePath('file2.json');
-  const file3Path = getFixturePath('file3.json');
-
-  expect(genDiff(file1Path, file2Path)).toBe(check1);
-  expect(genDiff(file2Path, file1Path)).toBe(check2);
-  expect(genDiff(file1Path, file3Path)).toBe(check3);
-  expect(genDiff(file3Path, file1Path)).toBe(check4);
+  expect(genDiff(jsonPaths[0], jsonPaths[1])).toBe(stylishChecks[0]);
+  expect(genDiff(jsonPaths[1], jsonPaths[0])).toBe(stylishChecks[1]);
+  expect(genDiff(jsonPaths[0], jsonPaths[2])).toBe(stylishChecks[2]);
+  expect(genDiff(jsonPaths[2], jsonPaths[0])).toBe(stylishChecks[3]);
 });
 
 test('gendiff yaml to stylish', () => {
-  const file1Path = getFixturePath('file1.yaml');
-  const file2Path = getFixturePath('file2.yml');
-  const file3Path = getFixturePath('file3.yaml');
+  expect(genDiff(yamlPaths[0], yamlPaths[1])).toBe(stylishChecks[0]);
+  expect(genDiff(yamlPaths[1], yamlPaths[0])).toBe(stylishChecks[1]);
+  expect(genDiff(yamlPaths[0], yamlPaths[2])).toBe(stylishChecks[2]);
+  expect(genDiff(yamlPaths[2], yamlPaths[0])).toBe(stylishChecks[3]);
+});
 
-  expect(genDiff(file1Path, file2Path)).toBe(check1);
-  expect(genDiff(file2Path, file1Path)).toBe(check2);
-  expect(genDiff(file1Path, file3Path)).toBe(check3);
-  expect(genDiff(file3Path, file1Path)).toBe(check4);
+test('gendiff json to plain', () => {
+  expect(genDiff(jsonPaths[0], jsonPaths[1], 'plain')).toBe(plainChecks[0]);
+  expect(genDiff(jsonPaths[1], jsonPaths[0], 'plain')).toBe(plainChecks[1]);
+});
+
+test('gendiff yaml to plain', () => {
+  expect(genDiff(yamlPaths[0], yamlPaths[1], 'plain')).toBe(plainChecks[0]);
+  expect(genDiff(yamlPaths[1], yamlPaths[0], 'plain')).toBe(plainChecks[1]);
+});
+
+test('throws on error type formatter', () => {
+  expect(() => {
+    genDiff(yamlPaths[1], yamlPaths[0], 'error');
+  }).toThrow();
+});
+
+test('throws on error type diff', () => {
+  expect(() => {
+    stylish({ type: 'error' });
+  }).toThrow();
 });
