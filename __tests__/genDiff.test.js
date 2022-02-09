@@ -1,4 +1,4 @@
-import { test, expect, beforeAll } from '@jest/globals';
+import { test, expect } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import * as fs from 'fs';
@@ -18,29 +18,22 @@ const getCheckFile = (checkPath) => {
   return check;
 };
 
-let stylishChecks = [];
 const checkNames = [
   'stylish1.txt',
   'stylish2.txt',
   'stylish3.txt',
   'stylish4.txt',
 ];
+const stylishChecks = checkNames.map((name) => getCheckFile(name));
 
-let plainChecks = [];
 const plainNames = ['plain1.txt', 'plain2.txt'];
+const plainChecks = plainNames.map((name) => getCheckFile(name));
 
-let jsonPaths = [];
 const jsonNames = ['file1.json', 'file2.json', 'file3.json'];
+const jsonPaths = jsonNames.map((name) => getFixturePath(name));
 
-let yamlPaths = [];
 const yamlNames = ['file1.yaml', 'file2.yml', 'file3.yaml'];
-
-beforeAll(() => {
-  stylishChecks = checkNames.map((name) => getCheckFile(name));
-  plainChecks = plainNames.map((name) => getCheckFile(name));
-  jsonPaths = jsonNames.map((name) => getFixturePath(name));
-  yamlPaths = yamlNames.map((name) => getFixturePath(name));
-});
+const yamlPaths = yamlNames.map((name) => getFixturePath(name));
 
 test('gendiff json to stylish', () => {
   expect(genDiff(jsonPaths[0], jsonPaths[1])).toBe(stylishChecks[0]);

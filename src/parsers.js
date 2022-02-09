@@ -5,16 +5,15 @@ const parseJson = (content) => JSON.parse(content);
 const parseYaml = (content) => yaml.load(content);
 
 const getParser = (extName) => {
-  let parse;
-  if (extName === '.json') {
-    parse = parseJson;
+  switch (extName) {
+    case '.json':
+      return parseJson;
+    case '.yaml':
+    case '.yml':
+      return parseYaml;
+    default:
+      throw new Error(`unknown file extension: ${extName}`);
   }
-
-  if (extName === '.yaml' || extName === '.yml') {
-    parse = parseYaml;
-  }
-
-  return parse;
 };
 
 export default (fileContent, extName) => getParser(extName)(fileContent);
