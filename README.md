@@ -16,5 +16,8 @@
 ### Use to generate diff from deep tree files:
 [![asciicast](https://asciinema.org/a/467548.svg)](https://asciinema.org/a/467548)
 
-### Use plain format
+### Use plain format:
 [![asciicast](https://asciinema.org/a/467816.svg)](https://asciinema.org/a/467816)
+
+### Use json format:
+[![asciicast](https://asciinema.org/a/3CsTPqrSBy00SaiL4Nd5nvykU.svg)](https://asciinema.org/a/3CsTPqrSBy00SaiL4Nd5nvykU)

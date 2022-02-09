@@ -1,18 +1,16 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
+import jsonFormatter from './jsonFormatter.js';
 
 export default (formatName) => {
-  let formatter;
   switch (formatName) {
     case 'stylish':
-      formatter = stylish;
-      break;
+      return stylish;
     case 'plain':
-      formatter = plain;
-      break;
+      return plain;
+    case 'json':
+      return jsonFormatter;
     default:
       throw new Error(`unknown format type: ${formatName}`);
   }
-
-  return formatter;
 };
